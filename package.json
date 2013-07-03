@@ -1,0 +1,39 @@
+{
+  "name": "child-pool",
+  "version": "0.0.0",
+  "description": "child_process pool implementation",
+  "keywords": [
+    "build",
+    "module",
+    "mobile",
+    "backbone"
+  ],
+  "author": "Kevin Decker <kpdecker@gmail.com> (http://incaseofstairs.com)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/walmartlabs/child-pool.git"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "dependencies": {
+    "underscore": "~1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.12.0",
+    "grunt": "~0.4.1",
+    "grunt-mocha-cov": "0.0.7",
+    "grunt-contrib-jshint": "~0.6.0"
+  },
+  "bin": {},
+  "main": "lib/child-pool",
+  "scripts": {
+    "blanket": {
+      "pattern": "//^((?!/node_modules/)(?!/test/).)*$/",
+      "data-cover-flags": {
+        "branchTracking": true
+      }
+    },
+    "test": "node_modules/.bin/mocha test/*.js"
+  }
+}
