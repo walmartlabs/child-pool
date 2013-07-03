@@ -13,7 +13,25 @@ describe('child-pool', function() {
   });
 
   describe('limit', function() {
-    it('should run up to pool limit');
+    it('should run up to pool limit', function(done) {
+      var pool = new ChildPool(__dirname + '/artifacts/child-worker', {workers: 2}),
+          execCount = 10,
+          seenCount = 0;
+
+      for (var i = 0; i < execCount; i++) {
+        pool.send('bar', function(err, data) {
+          seenCount++;
+
+          if (seenCount === execCount) {
+            done();
+          } else if (seenCount > execCount) {
+            assert.fail('Too many responses');
+          }
+        });
+      }
+
+      assert.equal(pool.workers.length, 2);
+    });
     it('should run up to global limit');
   });
 
