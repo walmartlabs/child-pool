@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "description": "child_process pool implementation",
   "keywords": [
-    "build",
-    "module",
-    "mobile",
-    "backbone"
+    "child_process",
+    "pool",
+    "fork"
   ],
   "author": "Kevin Decker <kpdecker@gmail.com> (http://incaseofstairs.com)",
   "repository": {
