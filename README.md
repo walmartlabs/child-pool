@@ -4,7 +4,6 @@
 
 - Global and per-pool worker limits
 - Background vs. foreground execution mode
-- Integrated child `console` handling
 - Integrated error handling
 
 ## Usage

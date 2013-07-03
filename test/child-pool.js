@@ -65,10 +65,5 @@ describe('child-pool', function() {
 
     it('should notify parent of errors');
     it('should notify parent of exceptions');
-
-    describe('console', function() {
-      it('should forward console.log');
-      it('should forward console.error');
-    });
   });
 });
