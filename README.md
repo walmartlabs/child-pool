@@ -36,6 +36,12 @@ Broadcasts `message` to all live workers immediately.
 
 A global `worker` object is declared within the worker context. This exposes 3 `process.send` wrappers that simplify data respones.
 
+```
+process.on('message', function(message) {
+  worker.data({foo: 'bar'});
+});
+```
+
 #### #data(data)
 
 Send a data message to the parent.
