@@ -123,6 +123,28 @@ describe('child-pool', function() {
       });
     });
   });
+
+  describe('out of band', function() {
+    it('should error on out of band message', function(done) {
+      var pool = new ChildPool(__dirname + '/artifacts/out-of-band-data');
+      pool.on('error', function(err) {
+        assert(err instanceof Error);
+        assert.equal(err.message, 'Out of band data: foo');
+        done();
+      });
+      pool.send({}, function() {});
+    });
+    it('should error on out of band error', function(done) {
+      var pool = new ChildPool(__dirname + '/artifacts/out-of-band-error');
+      pool.on('error', function(err) {
+        assert(err instanceof Error);
+        assert.equal(err.message, 'outside-splody');
+        assert(/ at .*out-of-band-error.js/.test(err.stack));
+        done();
+      });
+      pool.send({}, function() {});
+    });
+  });
 });
 
 function exec(execCount, pool, done) {

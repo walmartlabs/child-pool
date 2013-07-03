@@ -28,9 +28,13 @@ Options:
 
 Queues `message` for the worker, calling `callback` upon competion.
 
+`callback` will only be called once per message cycle. If the client sends out of band messages they will trigger an `error` event on the pool instance and may be handled as appropriate there.
+
 #### #sendAll(message)
 
 Broadcasts `message` to all live workers immediately.
+
+As there is no callback associated with this event, workers receiving this message should not send return messages. Those that do will cause an `error` event on the pool instance.
 
 ### Worker
 
