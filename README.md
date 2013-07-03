@@ -32,6 +32,21 @@ Queues `message` for the worker, calling `callback` upon competion.
 
 Broadcasts `message` to all live workers immediately.
 
+### Worker
+
+A global `worker` object is declared within the worker context. This exposes 3 `process.send` wrappers that simplify data respones.
+
+#### #data(data)
+
+Send a data message to the parent.
+
+#### #error(err)
+
+Send a non-fatal error message to the parent. This may be an `Error` or string instance. In the later case the stack trace of the call will be associated with the message.
+
+#### #fatal(err)
+
+Send a fatal error message to the parent. This may be an `Error` or string instance. In the later case the stack trace of the call will be associated with the message. The parent will terminate the worker after receiving this message.
 
 ## Global worker limit
 
