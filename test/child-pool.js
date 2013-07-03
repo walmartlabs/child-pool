@@ -16,6 +16,16 @@ describe('child-pool', function() {
     });
   });
 
+  it('should kill idle workers', function(done) {
+    var pool = new ChildPool(__dirname + '/artifacts/child-worker', {workers: 2, keepAlive: 10});
+    exec(2, pool, function() {
+      setTimeout(function() {
+        assert.equal(pool.workers.length, 0);
+        done();
+      }, 50);
+    });
+  });
+
   describe('limit', function() {
     it('should run up to pool limit', function(done) {
       var pool = new ChildPool(__dirname + '/artifacts/child-worker', {workers: 2});
@@ -39,25 +49,7 @@ describe('child-pool', function() {
       exec(numCPUs+2, pool, done);
       assert.equal(pool.workers.length, numCPUs-1);
     });
-
-    function exec(execCount, pool, done) {
-      var seenCount = 0;
-
-      for (var i = 0; i < execCount; i++) {
-        pool.send('bar', function(err, data) {
-          seenCount++;
-
-          if (seenCount === execCount) {
-            done();
-          } else if (seenCount > execCount) {
-            assert.fail('Too many responses');
-          }
-        });
-      }
-    }
   });
-
-  it('should kill idle workers');
 
   describe('worker', function() {
     it('should expose message API');
@@ -67,3 +59,19 @@ describe('child-pool', function() {
     it('should notify parent of exceptions');
   });
 });
+
+function exec(execCount, pool, done) {
+  var seenCount = 0;
+
+  for (var i = 0; i < execCount; i++) {
+    pool.send('bar', function(err, data) {
+      seenCount++;
+
+      if (seenCount === execCount) {
+        done();
+      } else if (seenCount > execCount) {
+        assert.fail('Too many responses');
+      }
+    });
+  }
+}
