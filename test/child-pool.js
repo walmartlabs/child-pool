@@ -2,7 +2,15 @@ var assert = require('assert'),
     ChildPool = require('../lib/child-pool');
 
 describe('child-pool', function() {
-  it('should run child');
+  it('should run child', function(done) {
+    var pool = new ChildPool(__dirname + '/artifacts/child-worker');
+
+    pool.send('bar', function(err, data) {
+      assert.equal(err, undefined);
+      assert.deepEqual(data, {data: 'foo', input: 'bar'});
+      done();
+    });
+  });
 
   describe('limit', function() {
     it('should run up to pool limit');
