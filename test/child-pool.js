@@ -26,6 +26,12 @@ describe('child-pool', function() {
     });
   });
 
+  it('should dispatch to all workers', function(done) {
+    var pool = new ChildPool(__dirname + '/artifacts/waiting-worker', {workers: 2});
+    exec(2, pool, done);
+    pool.sendAll('quit');
+  });
+
   describe('limit', function() {
     it('should run up to pool limit', function(done) {
       var pool = new ChildPool(__dirname + '/artifacts/child-worker', {workers: 2});
