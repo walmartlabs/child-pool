@@ -15,6 +15,14 @@ describe('child-pool', function() {
       done();
     });
   });
+  it('should handle missing files', function(done) {
+    var pool = new ChildPool('/404-worker');
+
+    pool.send('bar', function(err, data) {
+      assert.equal(err.message, 'Cannot find module \'/404-worker\'');
+      done();
+    });
+  });
 
   it('should kill idle workers', function(done) {
     var pool = new ChildPool(__dirname + '/artifacts/child-worker', {workers: 2, keepAlive: 10});
@@ -54,6 +62,42 @@ describe('child-pool', function() {
 
       exec(numCPUs+2, pool, done);
       assert.equal(pool.workers.length, numCPUs-1);
+    });
+    it('should share the global limit', function(done) {
+      var numCPUs = require('os').cpus().length,
+          pool1 = new ChildPool(__dirname + '/artifacts/child-worker', {workers: numCPUs+2}),
+          pool2 = new ChildPool(__dirname + '/artifacts/child-worker', {workers: numCPUs+2});
+
+      exec(numCPUs-2, pool1, poolDone);
+      exec(numCPUs-2, pool2, poolDone);
+
+      var count = 0;
+      function poolDone() {
+        count++;
+        if (count === 2) {
+          done();
+        }
+      }
+      assert.equal(pool1.workers.length, numCPUs-2);
+      assert.equal(pool2.workers.length, 2);
+    });
+    it('should continue after saturated global limit', function(done) {
+      var numCPUs = require('os').cpus().length,
+          pool1 = new ChildPool(__dirname + '/artifacts/child-worker', {workers: numCPUs+2}),
+          pool2 = new ChildPool(__dirname + '/artifacts/child-worker', {workers: numCPUs+2});
+
+      exec(numCPUs+2, pool1, poolDone);
+      exec(numCPUs+2, pool2, poolDone);
+
+      var count = 0;
+      function poolDone() {
+        count++;
+        if (count === 2) {
+          done();
+        }
+      }
+      assert.equal(pool1.workers.length, numCPUs);
+      assert.equal(pool2.workers.length, 0);
     });
   });
 
