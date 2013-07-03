@@ -102,11 +102,26 @@ describe('child-pool', function() {
   });
 
   describe('worker', function() {
-    it('should expose message API');
-    it('should expose error API');
+    it('should notify parent of errors', function(done) {
+      var pool = new ChildPool(__dirname + '/artifacts/erroring-worker');
 
-    it('should notify parent of errors');
-    it('should notify parent of exceptions');
+      pool.send('bar', function(err) {
+        assert(err instanceof Error);
+        assert.equal(err.message, 'It errored');
+        assert(/ at .*erroring-worker.js/.test(err.stack));
+        done();
+      });
+    });
+    it('should notify parent of exceptions', function(done) {
+      var pool = new ChildPool(__dirname + '/artifacts/exploding-worker');
+
+      pool.send('bar', function(err) {
+        assert(err instanceof Error);
+        assert.equal(err.message, 'esplody');
+        assert(/ at .*exploding-worker.js/.test(err.stack));
+        done();
+      });
+    });
   });
 });
 

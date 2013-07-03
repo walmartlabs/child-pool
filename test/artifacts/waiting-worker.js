@@ -1,5 +1,8 @@
+var run = false;
+
 process.on('message', function(msg) {
-  if (msg === 'quit') {
-    process.send({});
+  if (run || msg === 'quit') {
+    run = true;
+    worker.data({});
   }
 });

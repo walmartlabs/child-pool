@@ -28,6 +28,8 @@
   "nonstandard": true,
   "onevar": false,
   "predef": [
+    "worker",
+
     "describe",
     "it",
     "before",
