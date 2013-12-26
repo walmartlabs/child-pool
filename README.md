@@ -71,3 +71,7 @@ Undermost circumstances, the library will not spawn more than the number of CPUs
   The library will still spawn two workers.
 
 The global worker limit constrains any values that might have been passed in the pool initialization options.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/walmartlabs/child-pool/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
