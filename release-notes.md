@@ -2,7 +2,12 @@
 
 ## Development
 
-[Commits](https://github.com/walmartlabs/child-pool/compare/v1.2.0...master)
+[Commits](https://github.com/walmartlabs/child-pool/compare/v1.2.1...master)
+
+## v1.2.1 - March 2nd, 2015
+- [#6](https://github.com/walmartlabs/child-pool/pull/6) - killing process shouldn't raise exit event ([@buildmaster](https://api.github.com/users/buildmaster))
+
+[Commits](https://github.com/walmartlabs/child-pool/compare/v1.2.0...v1.2.1)
 
 ## v1.2.0 - February 4th, 2015
 - [#5](https://github.com/walmartlabs/child-pool/pull/5) - Process exiting without exit code should be an error ([@buildmaster](https://api.github.com/users/buildmaster))
