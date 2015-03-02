@@ -1,6 +1,6 @@
 {
   "name": "child-pool",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "child_process pool implementation",
   "keywords": [
     "child_process",
