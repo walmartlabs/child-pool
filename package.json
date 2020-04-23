@@ -16,7 +16,7 @@
     "node": ">=0.8"
   },
   "dependencies": {
-    "underscore": "~1.4.4"
+    "underscore": "~1.10.2"
   },
   "devDependencies": {
     "mocha": "~1.12.0",
